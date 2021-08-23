@@ -8,6 +8,8 @@ An STL-file mounting plate that fits the board can be downloaded from Thingivers
 https://www.thingiverse.com/thing:4928068
 
 Relevant YouTube videos:  
-https://youtu.be/Mqk7v33ycSw  
-https://youtu.be/PbSBGpspBiU  
+[Small Eurorack case DIY - Episode 1: Design](https://youtu.be/Mqk7v33ycSw)  
+[Small Eurorack case DIY - Episode 2: Build completed](https://youtu.be/PbSBGpspBiU)
+  
+  
 
