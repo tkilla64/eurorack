@@ -1,7 +1,7 @@
 # eurorack
 Eurorack DIY projects
 
-The is a collection of my DIY projects for Eurorack modular synths.
+This is a collection of my DIY projects for Eurorack modular synths.
 
 Some additional information can in most cases be found on my YouTube channel:
 https://www.youtube.com/channel/UCzQVnmnXbCWJxZCGEmN_3SQ
