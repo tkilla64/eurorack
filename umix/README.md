@@ -12,6 +12,7 @@ Two outputs
 ### Level indicator
 The output level is shown on a LED indicator.
 Levels below 1 dB are shown with a Green light, between 1 and 4 dB is shown with Amber and more than 4 dB is Red.
+0 dB = 5.0 Vp-p
 
 ### Voltage reference
 There is a +5.00 VDC Voltage reference connected to IN4.
