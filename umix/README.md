@@ -16,3 +16,8 @@ Levels below 1 dB are shown with a Green light, between 1 and 4 dB is shown with
 
 ### Voltage reference
 There is a +5.00 VDC Voltage reference connected to IN4.
+
+### Supply
++12 VDC @ 29 mA  
+-12 VDC @ 13 mA  
+
