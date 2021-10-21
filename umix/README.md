@@ -7,7 +7,7 @@ There are 4 attenuverter inputs with a gain of +/- 1.0. IN1, IN2 and IN3 is conn
 if nothing is connected to the input jack.
 
 ### Outputs
-Two outputs
+Two output jacks; inverting and non-inverting
 
 ### Level indicator
 The output level is shown on a LED indicator.
