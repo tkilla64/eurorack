@@ -1,4 +1,5 @@
 # pmult
+![pmult image](PMULT.jpg)
 Eurorack Passive Multiples (Mult)
 
 A simple but yet crucial module in any Eurorack case. The passive multiple "copies" one input to many outputs.
