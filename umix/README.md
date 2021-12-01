@@ -22,3 +22,6 @@ There is a +5.00 VDC Voltage reference connected to IN4.
 +12 VDC @ 29 mA  
 -12 VDC @ 13 mA  
 
+### YouTube video
+[DIY Eurorack Utility Mixer](https://youtu.be/52_5lXzpGxY)
+
