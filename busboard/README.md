@@ -9,7 +9,8 @@ https://www.thingiverse.com/thing:4928068
 
 Relevant YouTube videos:  
 [Small Eurorack case DIY - Episode 1: Design](https://youtu.be/Mqk7v33ycSw)  
-[Small Eurorack case DIY - Episode 2: Build completed](https://youtu.be/PbSBGpspBiU)
-  
+[Small Eurorack case DIY - Episode 2: Build completed](https://youtu.be/PbSBGpspBiU)  
+[DIY 12U Eurorack Case - Episode 1: Design](https://youtu.be/hxyk1j_HRDA)  
+[DIY 12U Eurorack Case - Episode 2: Build completed](https://youtu.be/UGUuR_29VmQ)  
   
 
