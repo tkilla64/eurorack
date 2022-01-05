@@ -4,7 +4,10 @@ Eurorack DIY projects
 This is a collection of my DIY projects for Eurorack modular synths.
 
 Some additional information can in most cases be found on my YouTube channel:
-https://www.youtube.com/channel/UCzQVnmnXbCWJxZCGEmN_3SQ
+https://www.youtube.com/c/MeeBilt
+
+bassbuddy:
+Step sequencer for the Erica Synths BASSLINE DIY.
 
 busboard:  
 A small busboard with room for 10 pcs 16-pin boxed headers and provisions for a +5VDC linear regulator. 
