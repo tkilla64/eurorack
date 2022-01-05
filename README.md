@@ -6,7 +6,7 @@ This is a collection of my DIY projects for Eurorack modular synths.
 Some additional information can in most cases be found on my YouTube channel:
 https://www.youtube.com/c/MeeBilt
 
-bassbuddy:
+bassbuddy:  
 Step sequencer for the Erica Synths BASSLINE DIY.
 
 busboard:  
