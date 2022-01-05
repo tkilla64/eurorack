@@ -21,13 +21,21 @@ A total of 10 patterns with pattern length 3-16 steps where each step have the f
 ### User Interface
 Consists of the 0.96" OLED, two pushbuttons and a rotary encoder with a pushbutton switch.
 
-EDIT button accesses menus for editing pattern steps.
+Press and hold encoder button to select pattern.
+
+EDIT button accesses menus for editing pattern steps:
+ - Select step
+ - Select and edit parameter in step
 
 MENU button accesses the following functions:
- - 
+ - NEW: create a new empty pattern
+ - SAVE: Save patterns and settings to EEPROM
+ - LOAD: Load patterns and settings from EEPROM
+ - TUNE: Output a note on 1V/OCT output
+ - VREF: Adjust DAC VRef to match +5V rail
 
 ### Supply
-+5  VDC @ 22 mA
++5  VDC @ 22 mA  
 +12 VDC @ 4 mA  
 -12 VDC @ 5 mA  
 
