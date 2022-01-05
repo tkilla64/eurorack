@@ -7,7 +7,7 @@ RESET input which resets the current pattern to step 1 at the low-to-high transi
 
 ### Outputs
 GATE output that is held high during the high period of the CLOCK input signal.
-1V/OCT output with note pitch voltage (0.833-2.833V)
+1V/OCT output with note pitch voltage (0.0833-4.0833V)
 VCF CV output with programmable voltage 0-5V
 ACCENT output programmable On/Off
 
@@ -43,5 +43,5 @@ MENU button accesses the following functions:
 TBA
 
 ### Additional information
-If you plan to build this module, please check out the additional information here
+If you plan to build this module, please check out the additional information here (TBA)
 
