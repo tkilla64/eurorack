@@ -1,7 +1,7 @@
-# umix
+# feitw
 ![feitw image](FEITW.jpg)
-This is my version of the René Schmitz "Fastest Envelope in the West". I only added an LED and tweaked 
-some component values a bit.
+This is my version of the René Schmitz "Fastest Envelope in the West" Envelope Generator. 
+I only added an LED and tweaked some component values a bit.
 The original design can be found here: https://www.schmitzbits.de/adsr.html
 
 ### Inputs
