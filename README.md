@@ -12,7 +12,7 @@ Step sequencer for the Erica Synths BASSLINE DIY.
 busboard:  
 A small busboard with room for 10 pcs 16-pin boxed headers and provisions for a +5VDC linear regulator. 
 
-feitw:
+feitw:  
 My take on the famous "Fastest Envelope in the West", designed by René Schmitz.
 
 pmult:  
