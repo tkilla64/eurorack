@@ -22,4 +22,4 @@ Width: 4HP
 Depth: 23 mm  
  
 ### YouTube video
-TBA
+[DIY Eurorack: ADSR Envelope Generator](https://youtu.be/1T7yvPN8B0Q)
