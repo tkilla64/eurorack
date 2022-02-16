@@ -1,4 +1,4 @@
-# feitw
+# vc-LFO
 ![vc-lfo image](VC_LFO.jpg)
 This is an LFO module with CV input and Triangle, Sine, Square, Ramp Up and Ramp Down outputs. The module also has a edge-triggered RESET input.
 
