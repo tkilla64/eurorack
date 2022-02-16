@@ -20,3 +20,6 @@ A passive multiple with two 1-to-3 or one 1-to-6 configuration.
 
 umix:  
 A DC-coupled mixer with 4 attenuverter inputs, two outputs with an LED level indicator and a +5.00 VDC voltage reference.
+
+vc-lfo:  
+A Voltage Controlled LFO with Triangle, Sine, Square, Ramp Up and Ramp Down outputs.
