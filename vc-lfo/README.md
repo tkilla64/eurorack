@@ -26,4 +26,4 @@ Width: 6HP
 Depth: 20 mm  
  
 ### YouTube video
-TBA
+[DIY Eurorack Voltage Controlled LFO](https://youtu.be/8RI5q261oWQ)
