@@ -23,3 +23,6 @@ A DC-coupled mixer with 4 attenuverter inputs, two outputs with an LED level ind
 
 vc-lfo:  
 A Voltage Controlled LFO with Triangle, Sine, Square, Ramp Up and Ramp Down outputs.
+
+misc:  
+Assorted nice-to-have-stuff. 
