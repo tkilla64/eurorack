@@ -40,7 +40,8 @@ MENU button accesses the following functions:
 -12 VDC @ 5 mA  
 
 ### YouTube video
-[Eurorack DIY: Bass Sequencer for Erica Synths Bassline DIY (ep1)](https://youtu.be/X2QkwgEL9Kc)
+[Eurorack DIY: Bass Sequencer for Erica Synths Bassline DIY (ep1)](https://youtu.be/X2QkwgEL9Kc)  
+[Eurorack DIY: Bass Buddy - Demo, calibration and tuning (ep2)](https://youtu.be/sNX3akq5ZS8)
 
 ### Additional information
 If you plan to build this module, please check out the additional information here (TBA)
