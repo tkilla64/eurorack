@@ -35,9 +35,10 @@ MENU button accesses the following functions:
  - VREF: Adjust DAC VRef to match +5V rail
 
 ### Supply
-+5  VDC @ 22 mA  
-+12 VDC @ 4 mA  
--12 VDC @ 5 mA  
+Two powering options, 16-pin power (or 10-pin) power connector variant showed below  
++5  VDC @ 22 mA (0 mA)  
++12 VDC @ 4 mA (26 mA)  
+-12 VDC @ 5 mA (5 mA)
 
 ### YouTube video
 [Eurorack DIY: Bass Sequencer for Erica Synths Bassline DIY (ep1)](https://youtu.be/X2QkwgEL9Kc)  
