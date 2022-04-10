@@ -31,33 +31,33 @@ The following components have been verified to work:
 
 Start by soldering all the SMT components to the component side. The preferred order is to start with the semiconductors and do the passive component afterwards. 
 
-![](img\01_smt_done.jpg)
+![smt_done](img/01_smt_done.jpg)
 
 Next step is to solder all the thru-hole components on the component side.
 
-![](img\02_th_comp_side.jpg)
+![th_top](img/02_th_comp_side.jpg)
 
-![](img\03_th_comp_side_done.jpg)
+![th_done](img/03_th_comp_side_done.jpg)
 
 Now it's time to assemble the thru-hole components on the top side. Start by soldering the 6x6mm tactile switches first.
 
-![](img\05_th_top_switch.jpg)
+![th_top_sw](img/05_th_top_switch.jpg)
 
 Assemble the jacks and encoder to the top side of the PCB. DO NOT SOLDER THEM YET.  
 
 Place the panel and hand tighten the nuts for the jacks. The encoder doesn't use the nut, but it needs to be aligned to fit the hole.
 
-![](img\06_th_top_panel.jpg)
+![th_top_pnl](img/06_th_top_panel.jpg)
 
 Now go ahead and solder the jacks and the encoder. Remove the panel afterwards.
 
 Glue the transparent lens to the panel with white wood glue (optional). Solder the 2.54 mm pins to the OLED . A small piece of foam can be used to hold the OLED in place during assembly.
 
-![](img\07_th_oled.jpg)
+![th_oled](img/07_th_oled.jpg)
 
 Place the foam and OLED on the top side and put the keytops on top of the tact switches. Carefully place the panel and align the OLED and the keytops. Tighten a couple of jack nuts to hold everything in place before you solder the OLED display in place.
 
-![](img\08_th_sandwich.jpg)
+![sideview](img/08_th_sandwich.jpg)
 
 Install the Arduino and the encoder knob.
 
