@@ -42,7 +42,8 @@ Two powering options, 16-pin power (or 10-pin) power connector variant showed be
 
 ### YouTube video
 [Eurorack DIY: Bass Sequencer for Erica Synths Bassline DIY (ep1)](https://youtu.be/X2QkwgEL9Kc)  
-[Eurorack DIY: Bass Buddy - Demo, calibration and tuning (ep2)](https://youtu.be/sNX3akq5ZS8)
+[Eurorack DIY: Bass Buddy - Demo, calibration and tuning (ep2)](https://youtu.be/sNX3akq5ZS8)  
+[Eurorack DIY: Bass Buddy - Design update and software walk-through (ep3)](https://youtu.be/_f0KY4kPSoI)
 
 ### Additional information
 If you plan to build this module, please check out the additional information here (TBA)
