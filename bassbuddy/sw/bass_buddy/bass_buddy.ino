@@ -11,7 +11,6 @@
  * can be tracked back to the original code.
  *
  * TODO:
- *  Copy pattern
  *  Random pattern
  *  Song mode (enough free RAM?)
  */
@@ -22,6 +21,10 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+
+// software version numbers
+#define VER_MAJOR 1         // increment if not backwards compatible 
+#define VER_MINOR 3         // minor changes (bugfixes, added features etc.)
 
 // display setting
 #define SCREEN_WIDTH  128   // OLED display width, in pixels
@@ -46,8 +49,10 @@ enum mMenuSystem
   mEditSlide,             // Edit Slide On/Off
   mEditTieNext,           // Edit Tie to next tone On/Off
   mSystemMenu,            // Select system function
-  mSystemNewPtn,          // Create new  - pattern
+  mSystemNewPtn,          // Create new - pattern
   mSystemNewStp,          // Create new - steps
+  mSystemCopyFrom,        // Copy pattern - from
+  mSystemCopyTo,          // Copy pattern - to
   mSystemSavePtn,         // Save patterns to EEPROM
   mSystemLoadPtn,         // Load patterns from EEPROM
   mSystemTune,            // Tune VCO
@@ -89,6 +94,7 @@ const char tied_str[]   PROGMEM = "  TIED:%s",
            on_str[]     PROGMEM = "ON ",
            off_str[]    PROGMEM = "OFF",
            new_str[]    PROGMEM = "NEW ",
+           copy_str[]   PROGMEM = "COPY",
            save_str[]   PROGMEM = "SAVE",
            load_str[]   PROGMEM = "LOAD",
            tune_str[]   PROGMEM = "TUNE",
@@ -96,12 +102,18 @@ const char tied_str[]   PROGMEM = "  TIED:%s",
            eeprom_str[] PROGMEM = "ALL PTN?",
            new_ptrn[]   PROGMEM = "PATTERN#%2d",
            new_step[]   PROGMEM = "# STEPS:%2d",
+           from_str[]   PROGMEM = "PTN FR:%2d",
+           to_str[]     PROGMEM = "PTN TO:%2d",
            menu_step[]  PROGMEM = "STEP:%02d",
            menu_ptrn[]  PROGMEM = "PTRN:#%01d",
            menu_edit[]  PROGMEM = "EDIT:#%1d",
            menu_sys[]   PROGMEM = "SYSMENU",
            erase_10[]   PROGMEM = "          ",
-           erase_3[]    PROGMEM = "   ";
+           erase_3[]    PROGMEM = "   ",
+           estep_str[]  PROGMEM = "%02d:%s %c%c%c",
+           ptnsel_str[] PROGMEM = "PTN: #%d",
+           ver_str[]    PROGMEM = "Ver %d.%02d",
+           volt_str[]   PROGMEM = "%1d.%03d mV";
            
 const char notes[12][3] PROGMEM = { "C-", "C#", "D-", "D#", "E-", "F-",
                                     "F#", "G-", "G#", "A-", "A#", "B-" };
@@ -130,6 +142,7 @@ int menu_mode = mPatternRun;
 int sys_menu = 0;
 int edit_step = 0;
 int edit_pattern = 0;
+int from_pattern = 1;
 int step_param = 0;
 int tuning = 0;
 
@@ -157,7 +170,6 @@ struct nonVolatileData
 
 nonVolatileData EE;
 
-const byte pattern_length[7] = { 3, 4, 5, 8, 10, 12, MAX_STEPS };
 int curr_pattern = 0;
 int next_pattern = 0;
 int pattern_step = 0;
@@ -168,7 +180,6 @@ void setup()
   eepromDataLoad();
   pattern_size = EE.pattlen[curr_pattern];
   display.begin(SSD1306_SWITCHCAPVCC);
-  drawPatternRunMenu();
   // setup pins
   pinMode(CLOCK_IN, INPUT);
   pinMode(RESET_IN, INPUT);
@@ -187,6 +198,10 @@ void setup()
   Wire.begin();
   Wire.setClock(400000);
   oldPosition = encoder.read();
+  // startup screen
+  drawSplashScreen();
+  delay(1500);
+  drawPatternRunMenu();
 }
 
 void loop()
@@ -475,16 +490,19 @@ void navigateMenuSystem(void)
             menu_mode = mSystemNewPtn;
             break;
           case 1:
+            menu_mode = mSystemCopyFrom;
+            break;
+          case 2:  
             menu_mode = mSystemSavePtn;
             break;           
-          case 2:
+          case 3:
             menu_mode = mSystemLoadPtn;
             break;         
-          case 3:
+          case 4:
             menu_mode = mSystemTune;
             tuning = 1; // turn on tuning: C-0
             break;                    
-          case 4:
+          case 5:
             menu_mode = mSystemSetVRef;
             revert_vref = EE.VRef;
             break;            
@@ -511,9 +529,10 @@ void navigateMenuSystem(void)
       drawSystemNewPtnMenu(1);
       if (enc_sw)
       {
-        for (int i=0 ; i<pattern_length[edit_step] ; i++)
+        for (int i=0 ; i<edit_step ; i++)
           EE.pattern[edit_pattern][i] = 0;
-        EE.pattlen[edit_pattern] = pattern_length[edit_step];
+          
+        EE.pattlen[edit_pattern] = edit_step;
         menu_mode = mSystemMenu;
         drawSystemMainMenu();
       }
@@ -523,7 +542,38 @@ void navigateMenuSystem(void)
         drawSystemMainMenu();
       }
       break;
-      
+
+    case mSystemCopyFrom:         // Copy pattern - select from
+      drawSystemCopyPtnMenu(0);
+      if (enc_sw)
+      {
+        menu_mode = mSystemCopyTo;
+      }
+      if (menu_sw)
+      {
+        menu_mode = mSystemMenu;
+        drawSystemMainMenu();
+      }
+      break;
+
+    case mSystemCopyTo:           // Copy pattern - select to
+      drawSystemCopyPtnMenu(1);
+      if (enc_sw)
+      {
+        for (int i=0 ; i<EE.pattlen[from_pattern] ; i++)
+          EE.pattern[edit_pattern][i] = EE.pattern[from_pattern][i];
+          
+        EE.pattlen[edit_pattern] = EE.pattlen[from_pattern];
+        menu_mode = mSystemMenu;
+        drawSystemMainMenu();
+      }
+      if (menu_sw)
+      {
+        menu_mode = mSystemMenu;
+        drawSystemMainMenu();
+      }
+      break;
+    
     case mSystemSavePtn:         // Save patterns to EEPROM or
     case mSystemLoadPtn:         // Load patterns from EEPROM
       drawSysEpromMenu();
@@ -592,7 +642,10 @@ void drawPatternRunMenu(void)
 }
 void drawPatternRun(int shard)
 {
-  char notestring[] = "---";  
+  char notestring[] = "---";
+  char temp_str[16];
+  strcpy_P(temp_str, estep_str);
+  
   // calculate step to display (with wraparound)
   int this_step = ((pattern_step+(shard-3)) + pattern_size) % pattern_size;
   
@@ -603,7 +656,7 @@ void drawPatternRun(int shard)
     display.setTextColor(BLACK, WHITE);
     
   display.setCursor(5,(shard*8)+5);  
-  sprintf(string, "%02d:%s %c%c%c", this_step+1, notestring, 
+  sprintf(string, temp_str, this_step+1, notestring, 
     EE.pattern[curr_pattern][this_step] & TIE_MASK ? 'T' : '-', 
     EE.pattern[curr_pattern][this_step] & ACCENT_MASK ? 'A' : '-', 
     EE.pattern[curr_pattern][this_step] & SLIDE_MASK ? 'S' : '-');
@@ -614,12 +667,14 @@ void drawPatternRun(int shard)
 // SELECT PATTERN
 void drawLoadPatternMenu(void)
 {
+  char temp_str[10];
+  strcpy_P(temp_str, ptnsel_str);
   display.clearDisplay();
   display.setTextSize(2);
   display.setTextColor(WHITE, BLACK);  
   display.drawRoundRect(19, 18, 90, 24, 3, WHITE); // pattern box
   display.setCursor(23, 23);
-  sprintf(string, "PTN: #%d", next_pattern);
+  sprintf(string, temp_str, next_pattern);
   display.print(string);
   update_display = 1;
 }
@@ -665,11 +720,14 @@ void drawPatternEdit(void)
 void drawEditStep(int step)
 {
   char notestring[4] = "---";
-
+  char temp_str[16];
+  strcpy_P(temp_str, estep_str);
+  
   if ((EE.pattern[curr_pattern][step] & NOTE_MASK) > 0)
     getNoteString(notestring, (int)(EE.pattern[curr_pattern][step] & NOTE_MASK)-1);
 
-  sprintf(string, "%02d:%s %c%c%c", step+1, notestring, 
+  sprintf(string, temp_str, step+1, notestring, -
+  +
     (EE.pattern[curr_pattern][step] & TIE_MASK) ? 'T' : '-', 
     (EE.pattern[curr_pattern][step] & ACCENT_MASK) ? 'A' : '-', 
     (EE.pattern[curr_pattern][step] & SLIDE_MASK) ? 'S' : '-');
@@ -862,21 +920,26 @@ void drawSysMenuSelect(int sys_menu)
       break;
       
     case 1:
-      strcpy_P(temp_str, save_str);
+      strcpy_P(temp_str, copy_str);
       display.print(temp_str);
       break;
 
     case 2:
-      strcpy_P(temp_str, load_str);
+      strcpy_P(temp_str, save_str);
       display.print(temp_str);
       break;
 
     case 3:
-      strcpy_P(temp_str,  tune_str);
+      strcpy_P(temp_str, load_str);
       display.print(temp_str);
       break;
 
     case 4:
+      strcpy_P(temp_str,  tune_str);
+      display.print(temp_str);
+      break;
+
+    case 5:
       strcpy_P(temp_str, vref_str);
       display.print(temp_str);
       break;
@@ -920,11 +983,11 @@ void drawSystemNewPtnMenu(int val)
     if (enc_step != 0)
     {
       edit_step += enc_step;
-      edit_step = constrain(edit_step, 0, 6);
+      edit_step = constrain(edit_step, 1, MAX_STEPS);
       enc_step = 0;
     }
     strcpy_P(temp_str, new_step);
-    sprintf(string, temp_str, pattern_length[edit_step]);
+    sprintf(string, temp_str, edit_step);
     display.setCursor(12, 40);
   }
   else
@@ -944,15 +1007,62 @@ void drawSystemNewPtnMenu(int val)
   display.print(string);
   update_display = 1;
 }
+void drawSystemCopyPtnMenu(int val)
+{
+  char temp_str[12];
+
+  if (val)
+  {
+    if (enc_step != 0)
+    {
+      edit_pattern += enc_step;
+      if (from_pattern == edit_pattern) // try copy to itself?
+      { 
+        if (from_pattern == MAX_PATTERN-1)
+          edit_pattern = MAX_PATTERN-2;
+        else if (from_pattern == 0)
+          edit_pattern = 1;
+        else
+          edit_pattern += enc_step;
+      }
+      edit_pattern = constrain(edit_pattern, 0, MAX_PATTERN-1);
+      enc_step = 0;
+    }
+    strcpy_P(temp_str, to_str);
+    sprintf(string, temp_str, edit_pattern);
+    display.setCursor(12, 40); 
+  }
+  else
+  {
+    if (enc_step != 0)
+    {
+      from_pattern += enc_step;
+      from_pattern = constrain(from_pattern, 0, MAX_PATTERN-1);
+      enc_step = 0;
+    }
+    if (from_pattern == edit_pattern)
+      ++edit_pattern %= 10; // adv dest to next pattern
+      
+    strcpy_P(temp_str, from_str);
+    sprintf(string, temp_str, from_pattern);
+    display.setCursor(12, 30);
+  }
+  display.setTextSize(1);
+  display.print(string);
+  update_display = 1;
+}
 void drawSystemSetVRef(void)
 {
+  char temp_str[12];
+
   if (enc_step != 0)
   {
-    EE.VRef += enc_step * 10;
+    EE.VRef += enc_step * 5;
     EE.VRef = constrain(EE.VRef, 4750, 5250);
     enc_step = 0;
   }
-  sprintf(string, "%1d.%03d mV", EE.VRef/1000, EE.VRef%1000);
+  strcpy_P(temp_str, volt_str);
+  sprintf(string, temp_str, EE.VRef/1000, EE.VRef%1000);
   display.setTextSize(1);
   display.setCursor(18, 36);
   display.print(string);
@@ -1029,4 +1139,20 @@ void eepromDataLoad(void)
 void eepromDataSave(void)
 {
   EEPROM.put(0, EE);
+}
+
+// Splash screen that shows software version numbers
+void drawSplashScreen(void)
+{
+  char temp_str[12];
+  strcpy_P(temp_str, ver_str);
+  
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE, BLACK);
+  display.setCursor(18, 23);
+  sprintf(string, temp_str, VER_MAJOR, VER_MINOR);
+  display.print(string);
+  display.drawRoundRect(14, 18, 102, 24, 3, WHITE);
+  display.display();
 }
