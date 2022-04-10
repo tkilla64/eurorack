@@ -12,7 +12,7 @@ VCF CV output with programmable voltage 0-5V
 ACCENT output programmable On/Off  
 
 ### Steps and Patterns
-A total of 10 patterns with pattern length 3-16 steps where each step have the following programmable functions:
+A total of 10 patterns with pattern length 1-16 steps where each step have the following programmable functions:
  - Note pitch (or rest)
  - Tie note to next step
  - Slide to next step
@@ -21,7 +21,7 @@ A total of 10 patterns with pattern length 3-16 steps where each step have the f
 ### User Interface
 Consists of the 0.96" OLED, two pushbuttons and a rotary encoder with a pushbutton switch.
 
-Press and hold encoder button to select pattern. The change will be made after the current pattern has reached the laste step.
+Press and hold encoder button to select pattern. The change will be made after the current pattern has reached the last step.
 
 EDIT button accesses menus for editing pattern steps:
  - Select step
@@ -29,6 +29,7 @@ EDIT button accesses menus for editing pattern steps:
 
 MENU button accesses the following functions:
  - NEW: create a new empty pattern
+ - COPY: Copy pattern
  - SAVE: Save patterns and settings to EEPROM
  - LOAD: Load patterns and settings from EEPROM
  - TUNE: Output a note on 1V/OCT output
@@ -46,5 +47,5 @@ Two powering options, 16-pin power (or 10-pin) power connector variant showed be
 [Eurorack DIY: Bass Buddy - Design update and software walk-through (ep3)](https://youtu.be/_f0KY4kPSoI)
 
 ### Additional information
-If you plan to build this module, please check out the additional information here (TBA)
+If you plan to build this module, please check out the additional information [here](build/README.md)
 
