@@ -26,3 +26,6 @@ A Voltage Controlled LFO with Triangle, Sine, Square, Ramp Up and Ramp Down outp
 
 misc:  
 Assorted nice-to-have-stuff. 
+
+3340-vco:  
+Voltage Controlled Oscillator based on the AS3340. 
