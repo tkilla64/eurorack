@@ -24,7 +24,7 @@
 
 // software version numbers
 #define VER_MAJOR 1         // increment if not backwards compatible 
-#define VER_MINOR 3         // minor changes (bugfixes, added features etc.)
+#define VER_MINOR 5         // minor changes (bugfixes, added features etc.)
 
 // display setting
 #define SCREEN_WIDTH  128   // OLED display width, in pixels
@@ -900,7 +900,7 @@ void drawSystemMain(void)
   if (enc_step != 0)
   {
     sys_menu += enc_step;
-    sys_menu = constrain(sys_menu, 0, 4);
+    sys_menu = constrain(sys_menu, 0, 5);
     enc_step = 0;
   }
   drawSysMenuSelect(sys_menu);
