@@ -9,7 +9,7 @@ https://www.youtube.com/c/MeeBilt
 bassbuddy:  
 Step sequencer for the Erica Synths BASSLINE DIY. 
 
-bmult:
+bmult:  
 Buffered mult with two 1-to-2 or one 1-to-4 outputs. 
 
 busboard:  
