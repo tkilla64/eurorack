@@ -18,4 +18,4 @@ Width: 2HP
 Depth: 23 mm  
 
 ### YouTube video
-TBA
+[DIY Eurorack: 2hp Buffered Multiple](https://youtu.be/whNYEe-qcSk)
