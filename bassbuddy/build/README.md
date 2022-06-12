@@ -21,11 +21,10 @@ The following components have been verified to work:
 | J2, J3, J5, J6, J7, J8 (Thonkiconn)        | PJ398SM            | Thonk     |
 | IC1 (Arduino Pro Mini 5V 16MHz)            | Geekcreit          | Banggood  |
 | SW1 (Rotary encoder)                       | PEC11R-4215F-S0024 | Bourns    |
-| SW2, SW3 (6x6 tact switch, 5mm height) [*] | -                  | Banggood  |
+| SW2, SW3 (6x6 tact switch, 13.5mm height)  | TL1105KF160Q       | E-switch  |
 | U2 (Analog SPDT)                           | TS5A3160DBVT       | TI        |
 | U3 (DAC)                                   | MCP4725A0T-E/CH    | Microchip |
-
-[*] 5 mm switches fits the 3D printed keytops (optional). If you are not using them - choose a switch with 13-14 mm height instead.  
+  
 
 ### Assembly steps
 
@@ -55,7 +54,7 @@ Glue the transparent lens to the panel with white wood glue (optional). Solder t
 
 ![th_oled](img/07_th_oled.jpg)
 
-Place the foam and OLED on the top side and put the keytops on top of the tact switches. Carefully place the panel and align the OLED and the keytops. Tighten a couple of jack nuts to hold everything in place before you solder the OLED display in place.
+Place the foam and OLED on the top side. Carefully place the panel and align the OLED. Tighten a couple of jack nuts to hold everything in place before you solder the OLED display in place.
 
 ![sideview](img/08_th_sandwich.jpg)
 
