@@ -18,6 +18,9 @@ Buffered mult with two 1-to-2 or one 1-to-4 outputs.
 busboard:  
 A small busboard with room for 10 pcs 16-pin boxed headers and provisions for a +5VDC linear regulator. 
 
+dvca:  
+Dual LIN/LOG VCA based on the MFOS design by Ray Wilson.
+
 feitw:  
 My take on the famous "Fastest Envelope in the West", designed by René Schmitz. 
 
