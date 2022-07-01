@@ -11,8 +11,7 @@
  * can be tracked back to the original code.
  *
  * TODO:
- *  Random pattern
- *  Song mode (enough free RAM?)
+ *  Random pattern generation
  */
 
 #include <EEPROM.h>
@@ -23,8 +22,8 @@
 #include <Adafruit_SSD1306.h>
 
 // software version numbers
-#define VER_MAJOR 1         // increment if not backwards compatible 
-#define VER_MINOR 5         // minor changes (bugfixes, added features etc.)
+#define VER_MAJOR 2         // increment if not backwards compatible 
+#define VER_MINOR 1         // minor changes (bugfixes, added features etc.)
 
 // display setting
 #define SCREEN_WIDTH  128   // OLED display width, in pixels
@@ -48,6 +47,8 @@ enum mMenuSystem
   mEditVcfCV,             // Edit VCF CV
   mEditSlide,             // Edit Slide On/Off
   mEditTieNext,           // Edit Tie to next tone On/Off
+  mEditPattLink,          // Edit Pattern Link
+  mEditPattRept,          // Edit Pattern Repeat
   mSystemMenu,            // Select system function
   mSystemNewPtn,          // Create new - pattern
   mSystemNewStp,          // Create new - steps
@@ -99,6 +100,7 @@ const char tied_str[]   PROGMEM = "  TIED:%s",
            load_str[]   PROGMEM = "LOAD",
            tune_str[]   PROGMEM = "TUNE",
            vref_str[]   PROGMEM = "VREF",
+           chain_str[]  PROGMEM = "CHAIN",
            eeprom_str[] PROGMEM = "ALL PTN?",
            new_ptrn[]   PROGMEM = "PATTERN#%2d",
            new_step[]   PROGMEM = "# STEPS:%2d",
@@ -111,7 +113,10 @@ const char tied_str[]   PROGMEM = "  TIED:%s",
            erase_10[]   PROGMEM = "          ",
            erase_3[]    PROGMEM = "   ",
            estep_str[]  PROGMEM = "%02d:%s %c%c%c",
-           ptnsel_str[] PROGMEM = "PTN: #%d",
+           rep1_str[]   PROGMEM = "CYC:%3d",
+           rep2_str[]   PROGMEM = " OF:%3d",
+           repeat_str[] PROGMEM = "CYCLES:%3d",
+           link_str[]   PROGMEM = "LINK TO: %1d",
            ver_str[]    PROGMEM = "Ver %d.%02d",
            volt_str[]   PROGMEM = "%1d.%03d mV";
            
@@ -142,13 +147,15 @@ int menu_mode = mPatternRun;
 int sys_menu = 0;
 int edit_step = 0;
 int edit_pattern = 0;
-int from_pattern = 1;
+int edit_param0 = 0;
+int edit_param1 = 1;
 int step_param = 0;
 int tuning = 0;
 
 // Pattern definitions
 #define MAX_PATTERN 10    // maximum patterns in memory
 #define MAX_STEPS   16    // maximum steps in pattern
+#define MAX_REPEATS 256   // maximum repeats of a pattern
 // Step layout
 // 7 bits VCF 
 // 3 bits Tie, Accent, Slide
@@ -158,12 +165,16 @@ int tuning = 0;
 #define ACCENT_MASK 0b0000000010000000
 #define TIE_MASK    0b0000000100000000
 #define VCF_MASK    0b1111111000000000
-#define MAGIC_NBR   12345
-
+#define MAGIC_NBR   12355                   // Change magic number when changing contents of nonVolatileData struct!
+// Pattern Length + Link
+#define PLEN_MASK   0b00001111
+#define PLNK_MASK   0b11110000
+// Pattern
 struct nonVolatileData 
 {
   word pattern[MAX_PATTERN][MAX_STEPS];     // pattern storage
-  byte pattlen[MAX_PATTERN];                // length of pattern
+  byte pattlen[MAX_PATTERN];                // length of pattern and link to next
+  byte pattrep[MAX_PATTERN];                // no of repeats 0-255
   int  VRef;                                // DAC VRef in mV (+5VDC rail)
   int  magic;                               // magic number to init empty EEPROM
 };
@@ -173,12 +184,15 @@ nonVolatileData EE;
 int curr_pattern = 0;
 int next_pattern = 0;
 int pattern_step = 0;
+int curr_repeat = 0;
 int pattern_size;
+int repeat_pattern;
 
 void setup() 
 {
   eepromDataLoad();
-  pattern_size = EE.pattlen[curr_pattern];
+  pattern_size = (EE.pattlen[curr_pattern] & PLEN_MASK)+1;
+  repeat_pattern = EE.pattrep[curr_pattern]+1;
   display.begin(SSD1306_SWITCHCAPVCC);
   // setup pins
   pinMode(CLOCK_IN, INPUT);
@@ -246,16 +260,29 @@ void loop()
       digitalWrite(GATE_OUT, LOW);        
     }    
     pattern_step++;    
-    if (pattern_step == pattern_size)
+    if (pattern_step >= pattern_size)
     {
+      curr_repeat++;
+      if (curr_repeat >= repeat_pattern)
+      {
+        curr_repeat = 0;
+        // ignore repeat pattern if pattern have been selected by user
+        if (next_pattern == curr_pattern)
+        {
+          next_pattern = EE.pattlen[curr_pattern]>>4;
+          repeat_pattern = EE.pattrep[next_pattern]+1;
+        }
+      }
       pattern_step = 0;
       curr_pattern = next_pattern;
-      pattern_size = EE.pattlen[next_pattern];
+      repeat_pattern = EE.pattrep[curr_pattern]+1;
+      pattern_size = (EE.pattlen[curr_pattern] & PLEN_MASK)+1;
       if (menu_mode == mPatternRun)
       {
         strcpy_P(fmt_str, menu_ptrn);
         sprintf(string, fmt_str, curr_pattern);
-        drawModeIndicator(string);        
+        drawModeIndicator(string);
+        drawRepeatIndicator(curr_repeat+1, repeat_pattern);
       }
     }
   }
@@ -321,6 +348,8 @@ void navigateMenuSystem(void)
       if (edit_sw)
       {
         menu_mode = mEditPatternMenu;
+        edit_pattern = curr_pattern;
+        edit_step = constrain(edit_step, 0, pattern_size-1);
         drawPatternEditMenu();
       }
       if (menu_sw)
@@ -363,8 +392,44 @@ void navigateMenuSystem(void)
         menu_mode = mEditStepMenu;
         drawEditStepParamMenu();
       }
+      if (menu_sw)
+      {
+        menu_mode = mEditPattLink;
+        edit_param1 = EE.pattrep[edit_pattern];
+        edit_param0 = EE.pattlen[edit_pattern] >> 4;
+        drawEditLinkMenu();
+      }
       break;
 
+    case mEditPattLink:     // Edit Link to next Pattern
+      drawEditLinkReptMenu(0);
+      if (menu_sw)
+      {
+        menu_mode = mEditPatternMenu;
+        drawPatternEditMenu();
+      }
+      if (enc_sw)
+      {
+        menu_mode = mEditPattRept; 
+      }
+      break;
+
+    case mEditPattRept:     // Edit Repeat of this Pattern
+      drawEditLinkReptMenu(1);
+      if (menu_sw)
+      {
+        menu_mode = mEditPatternMenu;
+        drawPatternEditMenu();
+      }
+      if (enc_sw)
+      {
+        EE.pattrep[edit_pattern] = edit_param1;
+        EE.pattlen[edit_pattern] = (EE.pattlen[edit_pattern] & ~PLNK_MASK) | (edit_param0 << 4);
+        menu_mode = mEditPatternMenu;
+        drawPatternEditMenu();
+      }
+      break;
+      
     case mEditStepMenu:     // Select step parameter to edit
       drawEditStepParam(shard);
       if (edit_sw)
@@ -374,7 +439,7 @@ void navigateMenuSystem(void)
       }
       if (enc_sw)
       {
-        revert_step = EE.pattern[curr_pattern][edit_step];
+        revert_step = EE.pattern[edit_pattern][edit_step];
         switch (step_param)
         {
           case 0:
@@ -403,7 +468,7 @@ void navigateMenuSystem(void)
       if (edit_sw)
       {
         menu_mode = mEditStepMenu;
-        EE.pattern[curr_pattern][edit_step] = revert_step; // bail out
+        EE.pattern[edit_pattern][edit_step] = revert_step; // bail out
         drawEditStepParamMenu();
       }
       if (enc_sw)
@@ -418,7 +483,7 @@ void navigateMenuSystem(void)
       if (edit_sw)
       {
         menu_mode = mEditStepMenu;
-        EE.pattern[curr_pattern][edit_step] = revert_step;
+        EE.pattern[edit_pattern][edit_step] = revert_step;
         drawEditStepParamMenu();
       }
       if (enc_sw)
@@ -433,7 +498,7 @@ void navigateMenuSystem(void)
       if (edit_sw)
       {
         menu_mode = mEditStepMenu;
-        EE.pattern[curr_pattern][edit_step] = revert_step;
+        EE.pattern[edit_pattern][edit_step] = revert_step;
         drawEditStepParamMenu();
       }
       if (enc_sw)
@@ -448,7 +513,7 @@ void navigateMenuSystem(void)
        if (edit_sw)
       {
         menu_mode = mEditStepMenu;
-        EE.pattern[curr_pattern][edit_step] = revert_step;
+        EE.pattern[edit_pattern][edit_step] = revert_step;
         drawEditStepParamMenu();
       }
       if (enc_sw)
@@ -463,7 +528,7 @@ void navigateMenuSystem(void)
       if (edit_sw)
       {
         menu_mode = mEditStepMenu;
-        EE.pattern[curr_pattern][edit_step] = revert_step;
+        EE.pattern[edit_pattern][edit_step] = revert_step;
         drawEditStepParamMenu();
       }
       if (enc_sw)
@@ -532,7 +597,8 @@ void navigateMenuSystem(void)
         for (int i=0 ; i<edit_step ; i++)
           EE.pattern[edit_pattern][i] = 0;
           
-        EE.pattlen[edit_pattern] = edit_step;
+        EE.pattlen[edit_pattern] = (edit_pattern<<4)+((edit_step-1) & PLEN_MASK);
+        EE.pattrep[edit_pattern] = 0;
         menu_mode = mSystemMenu;
         drawSystemMainMenu();
       }
@@ -560,10 +626,11 @@ void navigateMenuSystem(void)
       drawSystemCopyPtnMenu(1);
       if (enc_sw)
       {
-        for (int i=0 ; i<EE.pattlen[from_pattern] ; i++)
-          EE.pattern[edit_pattern][i] = EE.pattern[from_pattern][i];
+        for (int i=0 ; i<(EE.pattlen[edit_param1] & PLEN_MASK)+1 ; i++)
+          EE.pattern[edit_pattern][i] = EE.pattern[edit_param1][i];
           
-        EE.pattlen[edit_pattern] = EE.pattlen[from_pattern];
+        EE.pattlen[edit_pattern] = (EE.pattlen[edit_param1] & PLEN_MASK)+(edit_pattern<<4);
+        EE.pattrep[edit_pattern] = 0;
         menu_mode = mSystemMenu;
         drawSystemMainMenu();
       }
@@ -638,6 +705,7 @@ void drawPatternRunMenu(void)
   strcpy_P(fmt_str, menu_ptrn);
   sprintf(string, fmt_str, curr_pattern);
   drawModeIndicator(string);
+  drawRepeatIndicator(curr_repeat+1, repeat_pattern);
   update_display = 1;
 }
 void drawPatternRun(int shard)
@@ -668,7 +736,7 @@ void drawPatternRun(int shard)
 void drawLoadPatternMenu(void)
 {
   char temp_str[10];
-  strcpy_P(temp_str, ptnsel_str);
+  strcpy_P(temp_str, menu_ptrn);
   display.clearDisplay();
   display.setTextSize(2);
   display.setTextColor(WHITE, BLACK);  
@@ -701,7 +769,7 @@ void drawPatternEditMenu(void)
   display.setTextColor(WHITE, BLACK);
   display.drawRoundRect(0, 22, 127, 20, 3, WHITE); // edit box
   strcpy_P(fmt_str, menu_edit);
-  sprintf(string, fmt_str, curr_pattern);
+  sprintf(string, fmt_str, edit_pattern);
   drawModeIndicator(string);
   drawEditStep(edit_step);
   update_display = 1;
@@ -723,14 +791,14 @@ void drawEditStep(int step)
   char temp_str[16];
   strcpy_P(temp_str, estep_str);
   
-  if ((EE.pattern[curr_pattern][step] & NOTE_MASK) > 0)
-    getNoteString(notestring, (int)(EE.pattern[curr_pattern][step] & NOTE_MASK)-1);
+  if ((EE.pattern[edit_pattern][step] & NOTE_MASK) > 0)
+    getNoteString(notestring, (int)(EE.pattern[edit_pattern][step] & NOTE_MASK)-1);
 
   sprintf(string, temp_str, step+1, notestring, -
   +
-    (EE.pattern[curr_pattern][step] & TIE_MASK) ? 'T' : '-', 
-    (EE.pattern[curr_pattern][step] & ACCENT_MASK) ? 'A' : '-', 
-    (EE.pattern[curr_pattern][step] & SLIDE_MASK) ? 'S' : '-');
+    (EE.pattern[edit_pattern][step] & TIE_MASK) ? 'T' : '-', 
+    (EE.pattern[edit_pattern][step] & ACCENT_MASK) ? 'A' : '-', 
+    (EE.pattern[edit_pattern][step] & SLIDE_MASK) ? 'S' : '-');
   display.setCursor(3, 25);  
   display.setTextSize(2);
   display.print(string);
@@ -776,7 +844,7 @@ void drawEditStepParam(int shard)
   {
     case 0:
       if ((EE.pattern[curr_pattern][edit_step] & NOTE_MASK) > 0)
-        getNoteString(string, ((int)EE.pattern[curr_pattern][edit_step] & NOTE_MASK)-1);
+        getNoteString(string, ((int)EE.pattern[edit_pattern][edit_step] & NOTE_MASK)-1);
       else
         strcpy(string, "---");
       break;
@@ -785,26 +853,26 @@ void drawEditStepParam(int shard)
       strcpy_P(fmt_str, tied_str);
       strcpy_P(alt1, yes_str);
       strcpy_P(alt2, no_str);
-      sprintf(string, fmt_str, (EE.pattern[curr_pattern][edit_step] & TIE_MASK) ? alt1 : alt2);
+      sprintf(string, fmt_str, (EE.pattern[edit_pattern][edit_step] & TIE_MASK) ? alt1 : alt2);
       break;
 
     case 2:
       strcpy_P(fmt_str, accent_str);
       strcpy_P(alt1, on_str);
       strcpy_P(alt2, off_str);
-      sprintf(string, fmt_str, (EE.pattern[curr_pattern][edit_step] & ACCENT_MASK) ? alt1 : alt2);
+      sprintf(string, fmt_str, (EE.pattern[edit_pattern][edit_step] & ACCENT_MASK) ? alt1 : alt2);
       break;
 
     case 3:
       strcpy_P(fmt_str, slide_str);
       strcpy_P(alt1, on_str);
       strcpy_P(alt2, off_str);
-      sprintf(string, fmt_str, (EE.pattern[curr_pattern][edit_step] & SLIDE_MASK) ? alt1 : alt2);
+      sprintf(string, fmt_str, (EE.pattern[edit_pattern][edit_step] & SLIDE_MASK) ? alt1 : alt2);
       break;
 
     case 4:
       strcpy_P(fmt_str, vcfcv_str);
-      sprintf(string, fmt_str, (EE.pattern[curr_pattern][edit_step] & VCF_MASK) >> 9);
+      sprintf(string, fmt_str, (EE.pattern[edit_pattern][edit_step] & VCF_MASK) >> 9);
       break;
 
     case 5:
@@ -819,7 +887,7 @@ void drawEditStepParam(int shard)
 }
 void drawEditNote(void)
 {
-  int note = EE.pattern[curr_pattern][edit_step] & NOTE_MASK;
+  int note = EE.pattern[edit_pattern][edit_step] & NOTE_MASK;
 
   if (enc_step != 0)
   {
@@ -827,7 +895,7 @@ void drawEditNote(void)
     note = constrain(note, 0, 49);
     enc_step = 0;
   }
-  EE.pattern[curr_pattern][edit_step] = (EE.pattern[curr_pattern][edit_step] & ~NOTE_MASK) | note;
+  EE.pattern[edit_pattern][edit_step] = (EE.pattern[edit_pattern][edit_step] & ~NOTE_MASK) | note;
   drawEditStepParam(0);
   update_display = 1;
 }
@@ -836,9 +904,9 @@ void drawEditAccent(void)
   if (enc_step != 0)
   {
     if (enc_step > 0)
-      EE.pattern[curr_pattern][edit_step] |= ACCENT_MASK;
+      EE.pattern[edit_pattern][edit_step] |= ACCENT_MASK;
     else 
-      EE.pattern[curr_pattern][edit_step] &= ~ACCENT_MASK;
+      EE.pattern[edit_pattern][edit_step] &= ~ACCENT_MASK;
     enc_step = 0;
   }
   drawEditStepParam(2);
@@ -846,7 +914,7 @@ void drawEditAccent(void)
 }      
 void drawEditVcfCV(void)
 {
-  int vcf = (EE.pattern[curr_pattern][edit_step] & VCF_MASK) >> 9;
+  int vcf = (EE.pattern[edit_pattern][edit_step] & VCF_MASK) >> 9;
 
   if (enc_step != 0)
   {
@@ -854,7 +922,7 @@ void drawEditVcfCV(void)
     vcf = constrain(vcf, 0, 125);
     enc_step = 0;
   }
-  EE.pattern[curr_pattern][edit_step] = (EE.pattern[curr_pattern][edit_step] & ~VCF_MASK) | (vcf << 9);
+  EE.pattern[edit_pattern][edit_step] = (EE.pattern[edit_pattern][edit_step] & ~VCF_MASK) | (vcf << 9);
   drawEditStepParam(4);
   update_display = 1;  
 }
@@ -863,9 +931,9 @@ void drawEditSlide(void)
   if (enc_step != 0)
   {
     if (enc_step > 0)
-      EE.pattern[curr_pattern][edit_step] |= SLIDE_MASK;
+      EE.pattern[edit_pattern][edit_step] |= SLIDE_MASK;
     else 
-      EE.pattern[curr_pattern][edit_step] &= ~SLIDE_MASK;
+      EE.pattern[edit_pattern][edit_step] &= ~SLIDE_MASK;
     enc_step = 0;
   }
   drawEditStepParam(3);
@@ -876,12 +944,60 @@ void drawEditTieNext(void)
   if (enc_step != 0)
   {
     if (enc_step > 0)
-      EE.pattern[curr_pattern][edit_step] |= TIE_MASK;
+      EE.pattern[edit_pattern][edit_step] |= TIE_MASK;
     else 
-      EE.pattern[curr_pattern][edit_step] &= ~TIE_MASK;
+      EE.pattern[edit_pattern][edit_step] &= ~TIE_MASK;
     enc_step = 0;
   }
   drawEditStepParam(1);
+  update_display = 1;
+}
+
+// PATTERN LINK AND REPEAT
+void drawEditLinkMenu(void)
+{
+  display.clearDisplay();
+  display.drawRoundRect(2, 2, 76, 62, 3, WHITE); // pattern box
+  strcpy_P(fmt_str, chain_str);
+  display.setTextSize(2);
+  display.setCursor(11, 6);
+  display.print(fmt_str);
+  display.setTextSize(1);
+  strcpy_P(fmt_str, menu_edit);
+  sprintf(string, fmt_str, edit_pattern);
+  drawModeIndicator(string);
+  update_display = 1;
+}
+void drawEditLinkReptMenu(int val)
+{
+  char temp_str[12];
+
+  if (val)
+  {
+    if (enc_step != 0)
+    {
+      edit_param1 += enc_step;
+      edit_param1 = constrain(edit_param1, 0, MAX_REPEATS-1);
+      enc_step = 0;
+    }
+    strcpy_P(temp_str, repeat_str);
+    sprintf(string, temp_str, edit_param1+1);
+    display.setCursor(11, 40);
+  }
+  else
+  {
+    if (enc_step != 0)
+    {
+      edit_param0 += enc_step;
+      edit_param0 = constrain(edit_param0, 0, MAX_PATTERN-1);
+      enc_step = 0;
+    }
+    strcpy_P(temp_str, link_str);
+    sprintf(string, temp_str, edit_param0);
+    display.setCursor(11, 30); 
+  }
+  display.setTextSize(1);
+  display.print(string);
   update_display = 1;
 }
 
@@ -1016,11 +1132,11 @@ void drawSystemCopyPtnMenu(int val)
     if (enc_step != 0)
     {
       edit_pattern += enc_step;
-      if (from_pattern == edit_pattern) // try copy to itself?
+      if (edit_param1 == edit_pattern) // try copy to itself?
       { 
-        if (from_pattern == MAX_PATTERN-1)
+        if (edit_param1 == MAX_PATTERN-1)
           edit_pattern = MAX_PATTERN-2;
-        else if (from_pattern == 0)
+        else if (edit_param1 == 0)
           edit_pattern = 1;
         else
           edit_pattern += enc_step;
@@ -1036,15 +1152,15 @@ void drawSystemCopyPtnMenu(int val)
   {
     if (enc_step != 0)
     {
-      from_pattern += enc_step;
-      from_pattern = constrain(from_pattern, 0, MAX_PATTERN-1);
+      edit_param1 += enc_step;
+      edit_param1 = constrain(edit_param1, 0, MAX_PATTERN-1);
       enc_step = 0;
     }
-    if (from_pattern == edit_pattern)
+    if (edit_param1 == edit_pattern)
       ++edit_pattern %= 10; // adv dest to next pattern
       
     strcpy_P(temp_str, from_str);
-    sprintf(string, temp_str, from_pattern);
+    sprintf(string, temp_str, edit_param1);
     display.setCursor(12, 30);
   }
   display.setTextSize(1);
@@ -1079,6 +1195,25 @@ void drawModeIndicator(char const *str)
   display.drawRoundRect(80, 2, 47, 11, 3, WHITE); // menu mode and current pattern
   display.setCursor(83, 4);
   display.print(str);  
+}
+
+// Draw the Repeat Indicator window
+void drawRepeatIndicator(int from, int to)
+{
+  if (to > 1)
+  {
+    display.drawRoundRect(80, 14, 47, 19, 3, WHITE);
+    strcpy_P(fmt_str, rep1_str);
+    sprintf(string, fmt_str, from);
+    display.setCursor(83, 16);
+    display.print(string);
+    strcpy_P(fmt_str, rep2_str);
+    sprintf(string, fmt_str, to);
+    display.setCursor(83, 24);
+    display.print(string);
+  }
+  else
+   display.fillRect(80, 14, 47, 19, BLACK);
 }
 
 // Update outputstring with note expressed as 3 characters
@@ -1126,11 +1261,12 @@ void eepromDataLoad(void)
   {
     for (j=0 ; j<MAX_PATTERN ; j++)
     {
-      EE.pattlen[j] = 16;
+      EE.pattlen[j] = (j<<4) + (MAX_STEPS-1) ;
       for (i=0 ; i<MAX_STEPS ; i++)
       {
         EE.pattern[j][i] = 0;
       }
+      EE.pattrep[j] = 0;
     }
     EE.VRef = 5000;
     EE.magic = MAGIC_NBR;

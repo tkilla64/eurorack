@@ -24,8 +24,8 @@ Consists of the 0.96" OLED, two pushbuttons and a rotary encoder with a pushbutt
 Press and hold encoder button to select pattern. The change will be made after the current pattern has reached the last step.
 
 EDIT button accesses menus for editing pattern steps:
- - Select step
- - Select and edit parameter in step
+ - Select step to edit parameter in step
+ - or press MENU button and edit no of repeats and next pattern in chain
 
 MENU button accesses the following functions:
  - NEW: create a new empty pattern
