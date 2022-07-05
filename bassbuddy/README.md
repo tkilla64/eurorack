@@ -49,3 +49,6 @@ Two powering options, 16-pin power (or 10-pin) power connector variant showed be
 ### Additional information
 If you plan to build this module, please check out the additional information [here](build/README.md)
 
+### Tindie Store items
+[Bass Buddy sequencer Eurorack module [PCB kit]](https://www.tindie.com/products/26946/)  
+Bass Buddy sequencer Eurorack module [Full kit] TBA
