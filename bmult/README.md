@@ -19,3 +19,6 @@ Depth: 23 mm
 
 ### YouTube video
 [DIY Eurorack: 2hp Buffered Multiple](https://youtu.be/whNYEe-qcSk)
+
+### Tindie Store item
+[Buffered Multiple Eurorack module [Full kit]](https://www.tindie.com/products/27055/)
