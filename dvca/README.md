@@ -24,4 +24,4 @@ Width: 6HP
 Depth: 20 mm  
  
 ### YouTube video
-TBA
+[Eurorack DIY: Dual VCO module](https://youtu.be/xlG8FzicdFQ)
