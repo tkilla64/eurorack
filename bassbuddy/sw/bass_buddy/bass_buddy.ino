@@ -23,7 +23,7 @@
 
 // software version numbers
 #define VER_MAJOR 2         // increment if not backwards compatible 
-#define VER_MINOR 1         // minor changes (bugfixes, added features etc.)
+#define VER_MINOR 2         // minor changes (bugfixes, added features etc.)
 
 // display setting
 #define SCREEN_WIDTH  128   // OLED display width, in pixels
@@ -118,7 +118,7 @@ const char tied_str[]   PROGMEM = "  TIED:%s",
            repeat_str[] PROGMEM = "CYCLES:%3d",
            link_str[]   PROGMEM = "LINK TO: %1d",
            ver_str[]    PROGMEM = "Ver %d.%02d",
-           volt_str[]   PROGMEM = "%1d.%03d mV";
+           volt_str[]   PROGMEM = "%1d.%03d V";
            
 const char notes[12][3] PROGMEM = { "C-", "C#", "D-", "D#", "E-", "F-",
                                     "F#", "G-", "G#", "A-", "A#", "B-" };
