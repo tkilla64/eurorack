@@ -78,5 +78,8 @@ Verify/Compile the code and Upload.
 
 Please see [Eurorack DIY: Bass Buddy - Demo, calibration and tuning (ep2)](https://youtu.be/sNX3akq5ZS8).
 
+The calibration procedure is also covered here:
+[Eurorack DIY: Bass Buddy Build & Calibration](https://youtu.be/ylGxj2UV8lc)
+
 ### Additional information
 -
