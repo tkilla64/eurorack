@@ -23,7 +23,7 @@
 
 // software version numbers
 #define VER_MAJOR 2         // increment if not backwards compatible 
-#define VER_MINOR 2         // minor changes (bugfixes, added features etc.)
+#define VER_MINOR 3         // minor changes (bugfixes, added features etc.)
 
 // display setting
 #define SCREEN_WIDTH  128   // OLED display width, in pixels
@@ -246,7 +246,7 @@ void loop()
     {
       digitalWrite(GATE_OUT, HIGH);
     }
-    analogWrite(VCF_OUT, (int)((EE.pattern[curr_pattern][pattern_step] & VCF_MASK) >> 8) * 2);
+    analogWrite(VCF_OUT, (int)((EE.pattern[curr_pattern][pattern_step] & VCF_MASK) >> 9) * 2);
     analogWrite(ACCENT_OUT, (int)((EE.pattern[curr_pattern][pattern_step] & ACCENT_MASK) >> 7) * ACCENT_LEVEL);
   }
   // Falling edge;  set SLIDE and Advance Pattern step
@@ -582,6 +582,7 @@ void navigateMenuSystem(void)
       if (enc_sw)
       {
         menu_mode = mSystemNewStp;
+        edit_step = 1;
       }
       if (menu_sw)
       {
