@@ -18,6 +18,9 @@ Buffered mult with two 1-to-2 or one 1-to-4 outputs.
 busboard:  
 A small busboard with room for 10 pcs 16-pin boxed headers and provisions for a +5VDC linear regulator. 
 
+diode-vcf:  
+Moritz Kleins diode ladder VCF implemented as a Low-pass filter only. Two CV inputs, one with attenuator and one with attenuverter.
+
 dvca:  
 Dual LIN/LOG VCA based on the MFOS design by Ray Wilson.
 
