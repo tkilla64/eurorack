@@ -1,5 +1,5 @@
 # diode-vcf
-![vdca image](VCF.jpg)
+![VCF image](VCF.jpg)
 This is a diode ladder VCF - original design by Moritz Klein, with a couple of small adaptions made by me. There are two CV inputs, CV1 with an attenuator to control the amount and CV2 with an attenuverter so it's possible to invert the signal as well as controlling the amount of modulation. The filter is a low-pass filter.
 
 Check out Moritz Klein's VCF series on You Tube: https://youtube.com/playlist?list=PLHeL0JWdJLvT1PAqW4TtvxtRoXyk741WM
