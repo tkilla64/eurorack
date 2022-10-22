@@ -15,6 +15,7 @@
  */
 
 #include <EEPROM.h>
+#define  ENCODER_OPTIMIZE_INTERRUPTS
 #include <Encoder.h>
 #include <SPI.h>
 #include <Wire.h>
@@ -23,7 +24,7 @@
 
 // software version numbers
 #define VER_MAJOR 2         // increment if not backwards compatible 
-#define VER_MINOR 3         // minor changes (bugfixes, added features etc.)
+#define VER_MINOR 4         // minor changes (bugfixes, added features etc.)
 
 // display setting
 #define SCREEN_WIDTH  128   // OLED display width, in pixels
@@ -81,8 +82,6 @@ enum mMenuSystem
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT,
                         OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
                         
-// rotary encoder setting
-#define  ENCODER_OPTIMIZE_INTERRUPTS //countermeasure of encoder noise
 Encoder encoder(ENC_A, ENC_B);
 
 // strings stored in Flash
