@@ -6,6 +6,9 @@ This is a collection of my DIY projects for Eurorack modular synths.
 Some additional information can in most cases be found on my YouTube channel:
 https://www.youtube.com/c/MeeBilt
 
+909-kick:  
+TR-909 kick based on the Hex Inverter NeinOhNein Bass Drum with all mods included.
+
 3340-vco:  
 Voltage Controlled Oscillator based on the AS3340. 
 
