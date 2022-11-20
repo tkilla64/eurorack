@@ -29,6 +29,6 @@ Width: 8HP
 Depth: 20 mm  
  
 ### YouTube videos
-[Eurorack DIY: 909 Kick (Episode 1)](https://youtu.be/2MbjcZUPBi0)
-[Eurorack DIY: 909 Kick (Episode 2)](https://youtu.be/UFYXfUM5wMI)
+[Eurorack DIY: 909 Kick (Episode 1)](https://youtu.be/2MbjcZUPBi0)  
+[Eurorack DIY: 909 Kick (Episode 2)](https://youtu.be/UFYXfUM5wMI)  
 [Eurorack DIY: 909 Kick (Episode 3)](https://youtu.be/Gwy61tJjB0E)
