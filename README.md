@@ -37,6 +37,9 @@ RESET output and 5 Clock Divider outputs (/1 /2 /4 /8 and /16)
 misc:  
 Assorted nice-to-have-stuff. 
 
+noise_board:  
+The 909 noise generator as a piggyback board. Used in my 909 drum modules.
+
 pmult:  
 A passive multiple with two 1-to-3 or one 1-to-6 configuration. 
 
