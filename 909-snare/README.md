@@ -1,5 +1,5 @@
 # 909-snare
-![909SD image](909_SD.JPG)
+![909SD image](909_SD.jpg)
 This is the classic TR-909 snare drum based on the NeinOhNein Snare Drum from Hex Inverter. I have converted the design to SMT components that are easy to source.
 
 The module needs the noise_board, which is connected as a piggy-back PCB on the back of the snare main PCB, using 2 x 4-pin header connectors.
