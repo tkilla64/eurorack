@@ -27,4 +27,4 @@ Width: 40 mm
 Depth: 12 mm  
 
 ### YouTube video
-TBD
+[DIY Eurorack: 909 Snare Episode 2](https://youtu.be/z5UH8hfUGwE)
