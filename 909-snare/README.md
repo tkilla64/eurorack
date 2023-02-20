@@ -26,4 +26,5 @@ Width: 8HP
 Depth: 25 mm  
  
 ### YouTube videos
-TBD
+[DIY Eurorack: 909 Snare Episode 1](https://youtu.be/ORzMYeM-dPM)  
+[DIY Eurorack: 909 Snare Episode 2](https://youtu.be/z5UH8hfUGwE)
