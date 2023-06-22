@@ -1,5 +1,5 @@
 # output
-![output image](OUTPUT.png)
+![output image](OUTPUT.png)  
 An output module that converts the Eurorack levels into professional line levels with balanced 6.3mm TRS-jack outputs. 
 
 The module incorporates a VU meter, gain trimmer and a headphones amplifier with separate volume control, designed to drive 250 ohm studio headphones, with 3.5mm HP jack. Right input channel is normalled to the left input channel.
@@ -9,9 +9,9 @@ Left channel (MONO)
 Right channel  
 
 ### Outputs
-Balanced Left   
-Balanced Right  
-Headphones Stereo Jack  
+Balanced Left (6.3mm TRS Jack)  
+Balanced Right (6.3mm TRS Jack)  
+Headphones Stereo (3.5mm Jack)  
 
 ### Controls 
 Headphones Volume  
