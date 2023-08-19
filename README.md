@@ -9,6 +9,9 @@ https://www.youtube.com/c/MeeBilt
 3340-vco:  
 Voltage Controlled Oscillator based on the AS3340.
 
+909-hihat:  
+This is the classic TR-909 Hi Hat with the crispy lo-fi samples that we all love.
+
 909-kick:  
 TR-909 kick based on the Hex Inverter NeinOhNein Bass Drum with all mods included.
 
