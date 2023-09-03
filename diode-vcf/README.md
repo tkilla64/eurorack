@@ -11,10 +11,10 @@ SIGNAL IN, CV1 and CV2.
 SIGNAL OUT
 
 ### Controls
-Cutoff frequency
-Resonance amount
-CV1 Attenuator control
-CV2 Attenuverter control
+Cutoff frequency  
+Resonance amount  
+CV1 Attenuator control  
+CV2 Attenuverter control  
 
 ### Supply
 +12 VDC @ 12 mA  
