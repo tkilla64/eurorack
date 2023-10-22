@@ -10,13 +10,16 @@ https://www.youtube.com/c/MeeBilt
 Voltage Controlled Oscillator based on the AS3340.
 
 909-hihat:  
-This is the classic TR-909 Hi Hat with the crispy lo-fi samples that we all love.
+This is the classic TR-909 Hi Hat with the crispy lo-fi samples that we all love. 
 
 909-kick:  
-TR-909 kick based on the Hex Inverter NeinOhNein Bass Drum with all mods included.
+TR-909 kick based on the Hex Inverter NeinOhNein Bass Drum with all mods included. 
+
+909-rimshot:  
+TR-909 rimshot based on the Hex Inverter NeinOhNein Rimshot design. 
 
 909-snare:  
-TR-909 snare based on the Hex Inverter NeinOhNein Snare Drum.
+TR-909 snare based on the Hex Inverter NeinOhNein Snare Drum. 
 
 bassbuddy:   
 Step sequencer for the Erica Synths BASSLINE DIY. 
