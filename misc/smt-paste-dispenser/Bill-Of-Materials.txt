@@ -1,0 +1,21 @@
+The following parts are needed:
+
+3D-printed parts:
+
+1 pcs handle
+1 pcs Knob
+1 pcs nut-plug
+1 pcs Plug
+1 pcs tube-arm
+1 pcs tube-ring-18mm or tube-ring-20mm depending on the diameter of the syringe
+
+Metal parts:
+
+100 mm M5 threaded rod
+1 pcs M5 nut
+
+2 pcs M4x16 mm machine screw
+2 pcs M4 nut
+
+2 pcs M3x16 mm machine screw
+2 pcs M3 nut
