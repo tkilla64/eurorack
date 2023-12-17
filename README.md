@@ -9,6 +9,9 @@ https://www.youtube.com/c/MeeBilt
 3340-vco:  
 Voltage Controlled Oscillator based on the AS3340.
 
+909-clap:  
+TR-909 handclap based on the Hex Inverter NeinOhNein Clap with all mods included. 
+
 909-hihat:  
 This is the classic TR-909 Hi Hat with the crispy lo-fi samples that we all love. 
 
