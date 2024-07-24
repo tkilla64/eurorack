@@ -12,6 +12,9 @@ Voltage Controlled Oscillator based on the AS3340.
 909-clap:  
 TR-909 handclap based on the Hex Inverter NeinOhNein Clap with all mods included. 
 
+909-cymbals:  
+TR-909 Crash and Ride cymbals. It's possible to build this module with both voices or as the individual Crash or Ride.
+
 909-hihat:  
 This is the classic TR-909 Hi Hat with the crispy lo-fi samples that we all love. 
 
