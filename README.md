@@ -61,6 +61,9 @@ An output module that converts the Eurorack levels into balanced line levels. LE
 pmult:  
 A passive multiple with two 1-to-3 or one 1-to-6 configuration. 
 
+rp2040_proto:  
+A Raspberry RP2040 prototype board with some useful features.
+
 snh_noise:  
 Sample & Hold with an additional white noise generator. The noise output is normalled to the signal input.
 
