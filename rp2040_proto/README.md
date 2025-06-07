@@ -31,4 +31,4 @@ Here is a list of suggested TH components:
 | J2+J3| 40 pin 2.54mm pin-header | HARWIN | M20-9774046 |
 
 ### YouTube videos
-TBD
+[Raspberry RP2040 Prototype board](https://youtu.be/EUp3dIfy8HQ)
