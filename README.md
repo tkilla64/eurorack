@@ -25,7 +25,10 @@ TR-909 kick based on the Hex Inverter NeinOhNein Bass Drum with all mods include
 TR-909 rimshot based on the Hex Inverter NeinOhNein Rimshot design. 
 
 909-snare:  
-TR-909 snare based on the Hex Inverter NeinOhNein Snare Drum. 
+TR-909 snare based on the Hex Inverter NeinOhNein Snare Drum.
+
+909-toms:  
+TR-909 HI, MID and LOW Toms with an extra noise trimmer added.
 
 bassbuddy:   
 Step sequencer for the Erica Synths BASSLINE DIY. 
