@@ -1,4 +1,4 @@
-# 909-clap
+# 909-toms
 ![909TOMS image](909_TOMS.jpg)
 This is the classic TR-909 HI, MID and LOW Toms in one big module. It's inspired by the 9090 Toms where I have based the noise circuit of the original TR-909 and also added a noise level trimmer for each voice. 
 
@@ -29,4 +29,4 @@ Width: 22HP
 Depth: 30 mm  
  
 ### YouTube videos
-[DIY Eurorack: 909 Toms]()  
+[DIY Eurorack: 909 Toms](https://youtu.be/Y_JG6wYOSMI)  
