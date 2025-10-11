@@ -2,7 +2,7 @@
 ![rp2040 image](RP2040.jpg)
 This is a prototype board for the Raspberry RP2040.  
 Main features (if compared to the Raspberry Pi Pico module) is that it has a linear voltage regulator for the 3.3VDC power supply to the RP2040. There is also a 3.0VDC voltage reference connected to VCC_ADC and a FLASH memory. 
-The USB connector is USB-C type and the board also incorporates both a BOOLSEL and RESET button. There is also an I2C EEPROM connected to GPIO18 (SCL_1) and GPIO19 (SDA_1).
+The USB connector is USB-C type and the board also incorporates both a BOOLSEL and RESET button. There is also an I2C EEPROM connected to GPIO18 (SDA_1) and GPIO19 (SCL_1).
 
 ### Features
  - RP2040 (56 pin QFN)  
