@@ -1,5 +1,5 @@
 # Storage bins
-![storage bins](storagebins.png)
+![storage bins](storagebins.PNG)
 
 These storage bins are suitable for through-hole components, small PCBs, mechanical parts.
 Four different sizes that are possible to stack side by side in different combinations.
