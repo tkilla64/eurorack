@@ -1,0 +1,13 @@
+Designator,Footprint,Quantity,Value,LCSC Part #
+"C1, C10, C2, C3, C4, C7, C8, C9",0603,8,100n,C14663
+"C5, C6",CP_Radial_D5.0mm_P2.00mm,2,10uF/50V LP,
+J1,Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles,1,IN1,
+J2,Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles,1,OUT2,
+J3,Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles,1,OUT3,
+J4,IDC-Header_2x05_P2.54mm_Vertical,1,PWR,
+J5,Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles,1,IN4,
+J6,Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles,1,OUT5,
+J7,Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles,1,OUT6,
+"R1, R4",0603,2,100k,C25803
+"R2, R3, R5, R6",0603,4,1k,C21190
+"U1, U2, U3, U4",SOT-23-5,4,OPA171,C88036
