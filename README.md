@@ -39,6 +39,9 @@ Buffered mult with two 1-to-2 or one 1-to-4 outputs.
 busboard:  
 A small busboard with room for 10 pcs 16-pin boxed headers and provisions for a +5VDC linear regulator. 
 
+long_busboard:  
+Long busboard for cases with 104HP or longer rails.
+
 diode-vcf:  
 Moritz Kleins diode ladder VCF implemented as a Low-pass filter only. Two CV inputs, one with attenuator and one with attenuverter.
 
