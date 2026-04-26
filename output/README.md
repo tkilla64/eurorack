@@ -35,5 +35,5 @@ Depth: 35 mm
 [DIY Eurorack: Output module](https://youtu.be/tSoWA5eOjx4)  
 [DIY Eurorack: Output module Build video](https://youtu.be/rYu1KfZ926k)
 
-### Tindie store item
-[Audio Output Eurorack module [Full Kit]](https://www.tindie.com/products/30807/)  
+### Lectronz Store
+https://lectronz.com/products/audio-output-eurorack-module-full-kit

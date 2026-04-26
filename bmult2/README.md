@@ -22,5 +22,5 @@ Depth: 23 mm
 [DIY Eurorack: Improved Buffered Multiple](https://youtu.be/lw9ViHLgLU8)  
 [DIY Eurorack: Buffered Mult 2 Build video](https://youtu.be/6ZGJWC6srPE)
 
-### Tindie store
-https://www.tindie.com/products/tkilla64/buffered-multiple-eurorack-module-full-kit-2/
+### Lectronz Store
+https://lectronz.com/products/buffered-multiple-eurorack-module-full-kit-2

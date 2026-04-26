@@ -28,5 +28,5 @@ Depth: 20 mm
 ### YouTube video
 [DIY Eurorack Voltage Controlled LFO](https://youtu.be/8RI5q261oWQ)
 
-### Tindie store item
-[Voltage Controlled LFO Eurorack module [Full kit]](https://www.tindie.com/products/27865/)
+### Lectronz Store
+https://lectronz.com/products/voltage-controlled-lfo-eurorack-module-full-kit

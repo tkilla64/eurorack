@@ -24,4 +24,7 @@ Width: 4HP
 Depth: 20 mm  
  
 ### YouTube videos
-[DIY Eurorack: Sample & Hold + Noise](https://youtu.be/0EW2OIvYBs8)  
+[DIY Eurorack: Sample & Hold + Noise](https://youtu.be/0EW2OIvYBs8)
+
+### Lectronz Store
+https://lectronz.com/products/samplehold-noise-eurorack-module-full-kit
