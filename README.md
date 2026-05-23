@@ -33,6 +33,10 @@ TR-909 HI, MID and LOW Toms with an extra noise trimmer added.
 bassbuddy:   
 Step sequencer for the Erica Synths BASSLINE DIY. 
 
+bassbuddy2:  
+BassBuddy2 Sequencer is a dual sequencer for Eurorack.  
+[Link to separate repo](https://github.com/tkilla64/bb2-sequencer)
+
 bmult:  
 Buffered mult with two 1-to-2 or one 1-to-4 outputs. 
 
