@@ -6,6 +6,8 @@ The board has both input and output screw terminal connectors for the power-rail
 
 The busboard is recommended for cases with rails 104HP or longer.
 
+The "LBB_holder" files are a mounting plate that can be used to fit the long busboard. Two of these mounting plates are needed for each busboard. Use PETG filament for printing.
+
 ### Size:
 455 x 50 mm (L x W)
 
@@ -14,4 +16,6 @@ The busboard is recommended for cases with rails 104HP or longer.
 Wire gauge; 1.5mm2 (or 14-22 AWG)
 
 ### Relevant YouTube videos: 
-[Eurorack DIY: Long Busboard](https://youtu.be/p408_W6_PIQ)
+[Eurorack DIY: Long Busboard](https://youtu.be/p408_W6_PIQ)  
+[Eurorack DIY: Say Goodbye to the Flying Spaghetti-monster](https://youtu.be/-3jz8hdwY-U)  
+[Eurorack DIY: I got the Power](https://youtu.be/dtQiY3P3S7E)
