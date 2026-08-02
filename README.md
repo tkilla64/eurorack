@@ -46,6 +46,10 @@ A small busboard with room for 10 pcs 16-pin boxed headers and provisions for a 
 long_busboard:  
 Long busboard for cases with 104HP or longer rails.
 
+cvc:  
+A small control voltage converter, that is very handy to have in your case. Two Unipolar->Bipolar and two Bipolar->Unipolar channels in one module.  
+The unipolar range is selectable between 0-10V and 0-5V and all inputs and outputs have LED indicators.
+
 diode-vcf:  
 Moritz Kleins diode ladder VCF implemented as a Low-pass filter only. Two CV inputs, one with attenuator and one with attenuverter.
 
@@ -56,7 +60,7 @@ feitw:
 My take on the famous "Fastest Envelope in the West", designed by René Schmitz. 
 
 midi-sync:  
-Clock Generator with three sync modes: Internal (tap tempo), External clock and MIDI clock
+Clock Generator with three sync modes: Internal (tap tempo), External clock and MIDI clock.  
 RESET output and 5 Clock Divider outputs (/1 /2 /4 /8 and /16)
  
 misc:  
